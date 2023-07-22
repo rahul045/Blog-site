@@ -1,7 +1,7 @@
 {
   "params": {
     "local_server": "True",
-    "local_uri": "mysql://root:@localhost/cool_coders",
+    "local_uri": "mysql://rahulkalra:rahul$123db4free.net/cool_coders",
     "prod_uri": "mysql://root:@localhost/cool_coders",
     "fb_url": "https://facebook.com/cool_coders",
     "tw_url": "https://twitter.com/cool_coders",
