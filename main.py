@@ -16,11 +16,10 @@ app = Flask(__name__)
 
 app.config['UPLOAD_FOLDER']=params['upload_location']
 app.secret_key='super-secret-key'
-if(params['local_server']):
+
     # configure the SQLite database, relative to the app instance folder
-    app.config["SQLALCHEMY_DATABASE_URI"] = params['local_uri']
-else:
-    app.config["SQLALCHEMY_DATABASE_URI"] = params['prod_uri']
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ['local_uri']
+
 # initialize the app with the extension
 db.init_app(app)
 
