@@ -76,14 +76,14 @@ def about():
 
 @app.route("/dashboard",methods=['GET','POST'])
 def dashboard():
-    if ('user' in session and session['user'] == params['admin_user']) :
+    if ('user' in session and session['user'] == os.environ['admin_user']) :
         posts = Posts.query.all()
         return render_template('dashboard.html',params=params,posts=posts)
 
     if request.method=='POST':
         username=request.form.get('uname')
         password=request.form.get('pass')
-        if(username==params['admin_user'] and password==params['admin_password']):
+        if(username==os.environ['admin_user'] and password==os.environ['admin_password']):
             #set the session variable
             session['user']=username
             posts=Posts.query.all()
@@ -99,7 +99,7 @@ def logout():
 
 @app.route("/uploader", methods=['GET', 'POST'])
 def uploader():
-    if ('user' in session and session['user'] == params['admin_user']):
+    if ('user' in session and session['user'] == os.environ['admin_user']):
            if(request.method=='POST'):
                  f=request.files['file1']
                  f.save(os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(f.filename)))
@@ -110,7 +110,7 @@ def uploader():
 
 @app.route("/delete/<string:sno>", methods=['GET'])
 def delete(sno):
-    if ('user' in session and session['user'] == params['admin_user']):
+    if ('user' in session and session['user'] == os.environ['admin_user']):
               post=Posts.query.filter_by(sno=sno).first()
               db.session.delete(post)
               db.session.commit()
@@ -141,7 +141,7 @@ def post_route(post_slug):
 
 @app.route("/edit/<string:sno>", methods=['GET', 'POST'])
 def edit(sno):
-    if ('user' in session and session['user'] == params['admin_user']):
+    if ('user' in session and session['user'] == os.environ['admin_user']):
             if request.method=='POST':
                 req_title=request.form.get('title')
                 req_tag=request.form.get('tagline')
@@ -165,9 +165,9 @@ def edit(sno):
                     return redirect('/edit/'+sno)
     post=Posts.query.filter_by(sno=sno).first()
     return render_template('edit.html',params=params,post=post,sno=sno)
-
-
-
 app.run(debug=True)
+
+
+
 
 
