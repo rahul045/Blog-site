@@ -13,15 +13,7 @@ with open('config.json','r') as c:
 db = SQLAlchemy()
 # create the app
 app = Flask(__name__)
-# app.config.update(
-#     MAIL_SERVER='smtp.gmail.com',
-#     MAIL_PORT='465',
-#     MAIL_USE_SSL=True,
-#     Mail_USERNAME=params['gmail_name'],
-#     MAIL_PASSWORD=params['gmail_pass']
-# )
 
-# mail = Mail(app)
 app.config['UPLOAD_FOLDER']=params['upload_location']
 app.secret_key='super-secret-key'
 if(params['local_server']):
@@ -172,77 +164,10 @@ def edit(sno):
                     db.session.commit()
                     return redirect('/edit/'+sno)
     post=Posts.query.filter_by(sno=sno).first()
-    return render_template('edit.html',params=params,post=post)
+    return render_template('edit.html',params=params,post=post,sno=sno)
 
 
 
 app.run(debug=True)
 
 
-# from flask import Flask, render_template, request
-# from flask_sqlalchemy import SQLAlchemy
-# from flask_mail import Mail
-# import json
-# from datetime import datetime
-#
-#
-# with open('config.json', 'r') as c:
-#     params = json.load(c)["params"]
-#
-# local_server = True
-# app = Flask(__name__)
-# app.config.update(
-#     MAIL_SERVER = 'smtp.gmail.com',
-#     MAIL_PORT = '465',
-#     MAIL_USE_SSL = True,
-#     MAIL_USERNAME = 'rahulkalra045@gmail.com',
-#     MAIL_PASSWORD=  'bfieolhpqezmlgcj'
-# )
-# mail = Mail(app)
-# if(local_server):
-#     app.config['SQLALCHEMY_DATABASE_URI'] = params['local_uri']
-# else:
-#     app.config['SQLALCHEMY_DATABASE_URI'] = params['prod_uri']
-#
-# db = SQLAlchemy(app)
-#
-#
-# class  Contact_us(db.Model):
-#     sno = db.Column(db.Integer, primary_key=True,  nullable=False)
-#     name = db.Column(db.String(50), nullable=False)
-#     email = db.Column(db.String(50),unique=True,nullable=False)
-#     phone = db.Column(db.Integer,unique=True, nullable=False)
-#     msg = db.Column(db.String(200), nullable=False)
-#     date = db.Column(db.String(50), nullable=True)
-#
-# @app.route("/")
-# def home():
-#
-#     return render_template('index.html', params=params)
-#
-#
-# @app.route("/about")
-# def about():
-#     return render_template('about.html', params=params)
-#
-#
-# @app.route("/contact", methods = ['GET', 'POST'])
-# def contact():
-#     if(request.method=='POST'):
-#         name = request.form.get('name')
-#         email = request.form.get('email')
-#         phone = request.form.get('phone')
-#         message = request.form.get('msg')
-#         entry = Contact_us(name=name, phone= phone, email = email, msg = message,date= datetime.now() )
-#         db.session.add(entry)
-#         db.session.commit()
-#         mail.send_message('New message from ' + name,
-#                           sender=email,
-#                           recipients = [params['gmail-user']],
-#                           body = message + "\n" + phone
-#                           )
-#     return render_template('contact.html', params=params)
-#
-#
-# app.run(debug=True)
-#
