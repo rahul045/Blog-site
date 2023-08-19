@@ -18,7 +18,7 @@ app.config['UPLOAD_FOLDER']=params['upload_location']
 app.secret_key='super-secret-key'
 
     # configure the SQLite database, relative to the app instance folder
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ['local_uri']
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ['local_uri']
 
 # initialize the app with the extension
 db.init_app(app)
